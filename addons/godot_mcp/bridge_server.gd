@@ -24,7 +24,8 @@ func read_configuration() -> void:
             port = int(env_port)
 
 func start_server() -> void:
-    var err = server.listen(port)
+    # This bridge has no authentication; keep it reachable only on this host.
+    var err = server.listen(port, "127.0.0.1")
     if err == OK:
         print("[Godot MCP] Bridge server listening on port: ", port)
     else:
@@ -173,7 +174,7 @@ func get_scene_tree(peer: WebSocketPeer, cmd_id: String, params: Dictionary) -> 
             return
         root = EditorInterface.get_open_scene_roots()[idx]
 
-    var tree_data = serialize_node(root)
+    var tree_data = serialize_node(root, root)
     send_success(peer, cmd_id, {"tree": tree_data, "scene_path": scene_path if not scene_path.is_empty() else String(root.scene_file_path)})
 
 func get_open_scenes(peer: WebSocketPeer, cmd_id: String) -> void:
@@ -182,15 +183,15 @@ func get_open_scenes(peer: WebSocketPeer, cmd_id: String) -> void:
         "active_scene": EditorInterface.get_edited_scene_root().scene_file_path if EditorInterface.get_edited_scene_root() != null else ""
     })
 
-func serialize_node(node: Node) -> Dictionary:
+func serialize_node(node: Node, scene_root: Node) -> Dictionary:
     var children_data: Array[Dictionary] = []
     for child in node.get_children():
-        children_data.append(serialize_node(child))
+        children_data.append(serialize_node(child, scene_root))
 
     return {
         "name": node.name,
         "class": node.get_class(),
-        "path": String(node.get_path()),
+        "path": "." if node == scene_root else String(scene_root.get_path_to(node)),
         "children": children_data
     }
 
@@ -435,4 +436,3 @@ func send_error(peer: WebSocketPeer, cmd_id: String, err_msg: String) -> void:
         "error": err_msg
     }
     peer.send_text(JSON.stringify(response))
-
