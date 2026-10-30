@@ -119,9 +119,9 @@ Both the server binary's location and `GODOT_PATH` are machine-specific — two 
 }
 ```
 
-#### Claude Desktop
+#### MCP client
 
-Add the server to your `claude_desktop_config.json`:
+Add the server to your MCP client config (`claude_desktop_config.json` for Claude Desktop; filename varies by client):
 
 Windows:
 
