@@ -97,5 +97,5 @@ When interacting with a Godot project, agents must adhere to the following workf
 Before concluding any development task, every agent MUST verify the following checklist:
 
 - [ ] **Technical Language**: All code, identifiers, comments, and technical docs are in English.
-- [ ] **Communication Language**: All conversational responses and planning are in Russian.
+- [ ] **Communication Language**: All conversational responses and planning are in English.
 - [ ] **Formatting**: No horizontal rules (---) used except in footers.
