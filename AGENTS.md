@@ -165,6 +165,7 @@ When interacting with a Godot project, agents must adhere to the following workf
 Before concluding any development task, every agent MUST verify the following checklist:
 
 - [ ] **Technical Language**: All code, identifiers, comments, and technical docs are in English.
+- [ ] **Communication Language**: All conversational responses and planning are in English.
 - [ ] **Verification Pipeline**: `cargo clippy`, `cargo fmt --check`, and `cargo test --all-targets` pass; the GDScript syntax check passes for every addon script.
 - [ ] **Editor End-to-End Tests**: If `addons/godot_mcp/` changed, `editor_e2e_test` and `addon_export_test` pass with the Godot build named in `.github/godot-version`, on every branch the change lands on.
 - [ ] **Runtime End-to-End Tests**: If the running game, the debugger client, or the GDScript language-server client changed, `runtime_e2e_test` passes with that same Godot build.
